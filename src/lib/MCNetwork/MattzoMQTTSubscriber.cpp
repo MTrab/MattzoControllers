@@ -115,7 +115,7 @@ void MattzoMQTTSubscriber::reconnect()
 
         log4MC::info("MQTT: Subscriber attempting to connect...");
 
-        if (mqttSubscriberClient.connect(_subscriberName, _config->Topic, 0, false, lastWillMessage_char)) {
+        if (mqttSubscriberClient.connect(_subscriberName, _config->User, _config->Password, _config->Topic, 0, false, lastWillMessage_char)) {
             log4MC::info("MQTT: Subscriber connected");
             mqttSubscriberClient.subscribe(_config->Topic);
             log4MC::vlogf(LOG_INFO, "MQTT: Subscriber subscribed to topic '%s'", _config->Topic);
