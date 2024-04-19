@@ -52,6 +52,8 @@
 		"broker": "192.168.x.y",
 		"port": 1883,
 		"keepalive": 10,
-		"ping": 0
+		"ping": 0,
+		"user": "dummyuser",
+		"password": "dummypassword"
 	}
 }
