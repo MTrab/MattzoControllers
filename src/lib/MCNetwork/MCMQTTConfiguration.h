@@ -8,4 +8,6 @@ struct MCMQTTConfiguration {
     uint16_t KeepAlive;
     uint16_t Ping;
     const char *Topic;
+    const char *User;
+    const char *Password;
 };

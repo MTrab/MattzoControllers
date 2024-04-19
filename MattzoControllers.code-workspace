@@ -80,7 +80,8 @@
 			"compare": "cpp",
 			"concepts": "cpp",
 			"netfwd": "cpp",
-			"ranges": "cpp"
+			"ranges": "cpp",
+			"variant": "cpp"
 		},
 	}
 }
