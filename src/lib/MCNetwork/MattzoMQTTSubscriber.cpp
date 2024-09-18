@@ -113,11 +113,17 @@ void MattzoMQTTSubscriber::reconnect()
         char lastWillMessage_char[lastWillMessage.length() + 1];
         lastWillMessage.toCharArray(lastWillMessage_char, lastWillMessage.length() + 1);
 
-        // log4MC::info("MQTT: Subscriber attempting to connect...");
-        log4MC::vlogf(LOG_INFO, "MQTT: Attempting to reconnect to %s:%u using username '%s' and password '%s'...", _config->ServerAddress.c_str(), _config->ServerPort, _config->User.c_str(), _config->Password.c_str());
+        boolean connStat = false;
 
+        if (_config->User != "" and _config->User != "null" and _config->Password != "" and _config->Password != "null") {
+            log4MC::vlogf(LOG_INFO, "MQTT: Attempting to connect as '%s' to %s:%u ...", _config->User.c_str(), _config->ServerAddress.c_str(), _config->ServerPort);
+            connStat = mqttSubscriberClient.connect(_subscriberName, _config->User.c_str(), _config->Password.c_str(), _config->Topic, 0, false, lastWillMessage_char);
+        } else {
+            log4MC::vlogf(LOG_INFO, "MQTT: Attempting to connect as anonymous to %s:%u ...", _config->ServerAddress.c_str(), _config->ServerPort);
+            connStat = mqttSubscriberClient.connect(_subscriberName, _config->Topic, 0, false, lastWillMessage_char);
+        }
 
-        if (mqttSubscriberClient.connect(_subscriberName, _config->User.c_str(), _config->Password.c_str(), _config->Topic, 0, false, lastWillMessage_char)) {
+        if (connStat) {
             log4MC::info("MQTT: Subscriber connected");
             mqttSubscriberClient.subscribe(_config->Topic);
             log4MC::vlogf(LOG_INFO, "MQTT: Subscriber subscribed to topic '%s'", _config->Topic);
