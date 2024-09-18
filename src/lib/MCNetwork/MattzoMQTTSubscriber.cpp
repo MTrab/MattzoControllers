@@ -113,9 +113,11 @@ void MattzoMQTTSubscriber::reconnect()
         char lastWillMessage_char[lastWillMessage.length() + 1];
         lastWillMessage.toCharArray(lastWillMessage_char, lastWillMessage.length() + 1);
 
-        log4MC::info("MQTT: Subscriber attempting to connect...");
+        // log4MC::info("MQTT: Subscriber attempting to connect...");
+        log4MC::vlogf(LOG_INFO, "MQTT: Attempting to reconnect to %s:%u using username '%s' and password '%s'...", _config->ServerAddress.c_str(), _config->ServerPort, _config->User.c_str(), _config->Password.c_str());
 
-        if (mqttSubscriberClient.connect(_subscriberName, _config->User, _config->Password, _config->Topic, 0, false, lastWillMessage_char)) {
+
+        if (mqttSubscriberClient.connect(_subscriberName, _config->User.c_str(), _config->Password.c_str(), _config->Topic, 0, false, lastWillMessage_char)) {
             log4MC::info("MQTT: Subscriber connected");
             mqttSubscriberClient.subscribe(_config->Topic);
             log4MC::vlogf(LOG_INFO, "MQTT: Subscriber subscribed to topic '%s'", _config->Topic);
